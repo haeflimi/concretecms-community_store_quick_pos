@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.concrete5.org/doctrine-xml/0.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.concrete5.org/doctrine-xml/0.5 http://concrete5.github.io/doctrine-xml/doctrine-xml-0.5.xsd">
+
+    <!-- Badges: the raw id is never stored, only an HMAC of it (tagHash) and the last characters for staff (hint) -->
+    <table name="QuickPosBadges">
+        <field name="id" type="integer"><unsigned/><autoincrement/><key/></field>
+        <field name="uID" type="integer"><unsigned/><notnull/></field>
+        <field name="tagHash" type="string" size="64"><notnull/></field>
+        <field name="hint" type="string" size="8"><notnull/></field>
+        <field name="createdAt" type="datetime"><notnull/></field>
+        <field name="createdBy" type="integer"><unsigned/></field>
+        <field name="lastUsedAt" type="datetime"/>
+        <field name="revokedAt" type="datetime"/>
+        <index name="qpos_badge_hash"><col>tagHash</col></index>
+        <index name="qpos_badge_user"><col>uID</col></index>
+    </table>
+
+    <!-- Lookup keys of a badge: HMACs of the full id and of the fragments a reader may deliver when it cuts characters
+         off the start or the end. "missing" = number of characters cut off; the fewest wins. -->
+    <table name="QuickPosBadgeKeys">
+        <field name="id" type="integer"><unsigned/><autoincrement/><key/></field>
+        <field name="badgeID" type="integer"><unsigned/><notnull/></field>
+        <field name="keyHash" type="string" size="64"><notnull/></field>
+        <field name="missing" type="smallint"><unsigned/><notnull/><default value="0"/></field>
+        <index name="qpos_key_hash"><col>keyHash</col></index>
+        <index name="qpos_key_badge"><col>badgeID</col></index>
+    </table>
+
+    <!-- Enrolled kiosk devices: the device keeps a random token in a cookie, the database only its hash -->
+    <table name="QuickPosDevices">
+        <field name="id" type="integer"><unsigned/><autoincrement/><key/></field>
+        <field name="name" type="string" size="100"><notnull/></field>
+        <field name="tokenHash" type="string" size="64"><notnull/></field>
+        <field name="createdAt" type="datetime"><notnull/></field>
+        <field name="createdBy" type="integer"><unsigned/></field>
+        <field name="lastSeenAt" type="datetime"/>
+        <field name="revokedAt" type="datetime"/>
+        <!-- rate limit of unknown badges: failures since failSince, locked until lockedUntil (unix time) -->
+        <field name="failCount" type="smallint"><unsigned/><notnull/><default value="0"/></field>
+        <field name="failSince" type="integer"><unsigned/><notnull/><default value="0"/></field>
+        <field name="lockedUntil" type="integer"><unsigned/><notnull/><default value="0"/></field>
+        <index name="qpos_device_token"><unique/><col>tokenHash</col></index>
+    </table>
+
+    <!-- Every sale and top-up: uuid (made by the client per cart) makes a repeated request a no-op, the id is the
+         receipt number -->
+    <table name="QuickPosSales">
+        <field name="id" type="integer"><unsigned/><autoincrement/><key/></field>
+        <field name="uuid" type="string" size="64"><notnull/></field>
+        <field name="source" type="string" size="16"><notnull/></field>
+        <field name="method" type="string" size="16"><notnull/></field>
+        <field name="oID" type="integer"><unsigned/></field>
+        <field name="uID" type="integer"><unsigned/><notnull/><default value="0"/></field>
+        <field name="deviceID" type="integer"><unsigned/></field>
+        <field name="staffUID" type="integer"><unsigned/></field>
+        <field name="bID" type="integer"><unsigned/></field>
+        <field name="total" type="decimal" size="10.2"><notnull/><default value="0"/></field>
+        <field name="items" type="text"/>
+        <field name="createdAt" type="datetime"><notnull/></field>
+        <index name="qpos_sale_uuid"><unique/><col>uuid</col></index>
+        <index name="qpos_sale_user"><col>uID</col></index>
+        <index name="qpos_sale_block"><col>bID</col><col>createdAt</col></index>
+    </table>
+</schema>

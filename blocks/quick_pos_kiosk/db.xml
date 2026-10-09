@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.concrete5.org/doctrine-xml/0.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.concrete5.org/doctrine-xml/0.5 http://concrete5.github.io/doctrine-xml/doctrine-xml-0.5.xsd">
+    <table name="btQuickPosKiosk">
+        <field name="bID" type="integer"><unsigned/><key/></field>
+        <field name="eventID" type="integer"><notnull/><default value="0"/></field>
+        <field name="groups" type="text"/>
+        <field name="tabLimit" type="decimal" size="10.2"><notnull/><default value="0"/></field>
+        <field name="idleSeconds" type="integer"><unsigned/><notnull/><default value="60"/></field>
+        <field name="fullscreen" type="boolean"><notnull/><default value="1"/></field>
+        <field name="headline" type="string" size="255"/>
+        <field name="intro" type="text"/>
+    </table>
+</schema>

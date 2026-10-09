@@ -1,0 +1,956 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the community_store_quick_pos package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: community_store_quick_pos\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-09 22:02+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: de_DE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#: community_store_quick_pos/controller.php:43
+msgid "Community Store Quick POS"
+msgstr "Community Store Quick POS"
+
+#: community_store_quick_pos/controller.php:48
+msgid "Self-service kiosk and staff register for Community Store, with badge authentication."
+msgstr "Self-Service-Kiosk und Crew-Kasse für Community Store, mit Anmeldung per Badge."
+
+#: community_store_quick_pos/controller.php:73
+msgid "This package requires that Community Store be installed."
+msgstr "Dieses Paket setzt voraus, dass Community Store installiert ist."
+
+#: community_store_quick_pos/controller.php:125
+msgid "Quick POS"
+msgstr "Quick POS"
+
+#: community_store_quick_pos/controller.php:125
+msgid "Kiosk devices, badges and POS settings"
+msgstr "Kiosk-Geräte, Badges und Kassen-Einstellungen"
+
+#: community_store_quick_pos/src/PosBlock.php:28
+msgid "Package"
+msgstr "Paket"
+
+#: community_store_quick_pos/src/PosBlock.php:28
+msgid "Drink"
+msgstr "Getränk"
+
+#: community_store_quick_pos/src/PosBlock.php:28
+msgid "Energy"
+msgstr "Energy"
+
+#: community_store_quick_pos/src/PosBlock.php:28
+msgid "Beer"
+msgstr "Bier"
+
+#: community_store_quick_pos/src/PosBlock.php:28
+msgid "Coffee"
+msgstr "Kaffee"
+
+#: community_store_quick_pos/src/PosBlock.php:29
+msgid "Snack"
+msgstr "Snack"
+
+#: community_store_quick_pos/src/PosBlock.php:29
+msgid "Sweets"
+msgstr "Süßigkeiten"
+
+#: community_store_quick_pos/src/PosBlock.php:29
+msgid "Pizza"
+msgstr "Pizza"
+
+#: community_store_quick_pos/src/PosBlock.php:29
+msgid "Sandwich"
+msgstr "Sandwich"
+
+#: community_store_quick_pos/src/PosBlock.php:29
+msgid "Food"
+msgstr "Essen"
+
+#: community_store_quick_pos/src/PosBlock.php:30
+msgid "Merch"
+msgstr "Merch"
+
+#: community_store_quick_pos/src/PosBlock.php:30
+msgid "Stickers"
+msgstr "Sticker"
+
+#: community_store_quick_pos/src/PosBlock.php:30
+msgid "Hardware"
+msgstr "Hardware"
+
+#: community_store_quick_pos/src/PosBlock.php:30
+msgid "Cable"
+msgstr "Kabel"
+
+#: community_store_quick_pos/src/PosBlock.php:30
+msgid "Favourite"
+msgstr "Favorit"
+
+#: community_store_quick_pos/src/PosBlock.php:31
+msgid "Ticket"
+msgstr "Ticket"
+
+#: community_store_quick_pos/src/PosBlock.php:31
+msgid "Gift"
+msgstr "Geschenk"
+
+#: community_store_quick_pos/src/PosBlock.php:114
+msgid "The event that is on now (check-in)"
+msgstr "Das Event, das gerade läuft (Check-in)"
+
+#: community_store_quick_pos/src/PosBlock.php:117
+msgid "No event"
+msgstr "Kein Event"
+
+#: community_store_quick_pos/src/Labels.php:18
+msgid "Your order"
+msgstr "Deine Bestellung"
+
+#: community_store_quick_pos/src/Labels.php:19
+msgid "Nothing selected yet."
+msgstr "Noch nichts ausgewählt."
+
+#: community_store_quick_pos/src/Labels.php:20
+msgid "Total"
+msgstr "Total"
+
+#: community_store_quick_pos/src/Labels.php:21
+msgid "each"
+msgstr "pro Stück"
+
+#: community_store_quick_pos/src/Labels.php:22
+msgid "items"
+msgstr "Artikel"
+
+#: community_store_quick_pos/src/Labels.php:23
+msgid "Add"
+msgstr "Hinzufügen"
+
+#: community_store_quick_pos/src/Labels.php:24
+#, php-format
+msgid "Add · %s"
+msgstr "Hinzufügen · %s"
+
+#: community_store_quick_pos/src/Labels.php:25
+msgid "Back"
+msgstr "Zurück"
+
+#: community_store_quick_pos/src/Labels.php:26
+msgid "Remove"
+msgstr "Entfernen"
+
+#: community_store_quick_pos/src/Labels.php:27
+msgid "Sold out"
+msgstr "Ausverkauft"
+
+#: community_store_quick_pos/src/Labels.php:28
+#, php-format
+msgid "Only %s left"
+msgstr "Nur noch %s"
+
+#: community_store_quick_pos/src/Labels.php:29
+msgid "Unit price"
+msgstr "Stückpreis"
+
+#: community_store_quick_pos/src/Labels.php:30
+msgid "Quantity"
+msgstr "Menge"
+
+#: community_store_quick_pos/src/Labels.php:31
+msgid "Fewer"
+msgstr "Weniger"
+
+#: community_store_quick_pos/src/Labels.php:32
+msgid "More"
+msgstr "Mehr"
+
+#: community_store_quick_pos/src/Labels.php:33
+msgid "Favourites"
+msgstr "Favoriten"
+
+#: community_store_quick_pos/src/Labels.php:34
+msgid "All"
+msgstr "Alle"
+
+#: community_store_quick_pos/src/Labels.php:35
+msgid "Receipt"
+msgstr "Beleg"
+
+#: community_store_quick_pos/src/Labels.php:36
+msgid "No connection to the server. Please try again."
+msgstr "Keine Verbindung zum Server. Bitte versuche es nochmals."
+
+#: community_store_quick_pos/src/Labels.php:37
+msgid "Scan a badge"
+msgstr "Badge scannen"
+
+#: community_store_quick_pos/src/Labels.php:38
+msgid "Nothing for sale right now."
+msgstr "Im Moment gibt es nichts zu kaufen."
+
+#: community_store_quick_pos/src/Labels.php:45
+msgid "Self-service"
+msgstr "Self-Service"
+
+#: community_store_quick_pos/src/Labels.php:46
+msgid "Hold your badge to the reader"
+msgstr "Halte deinen Badge an den Leser"
+
+#: community_store_quick_pos/src/Labels.php:47
+msgid "The reader is next to the screen."
+msgstr "Der Leser ist neben dem Bildschirm."
+
+#: community_store_quick_pos/src/Labels.php:48
+msgid "Reader"
+msgstr "Leser"
+
+#: community_store_quick_pos/src/Labels.php:49
+msgid "Badge recognised"
+msgstr "Badge erkannt"
+
+#: community_store_quick_pos/src/Labels.php:50
+#, php-format
+msgid "Hi, %s"
+msgstr "Hallo, %s"
+
+#: community_store_quick_pos/src/Labels.php:51
+#: community_store_quick_pos/src/Labels.php:116
+#, php-format
+msgid "Seat %s"
+msgstr "Sitz %s"
+
+#: community_store_quick_pos/src/Labels.php:52
+msgid "Your LAN tab"
+msgstr "Deine LAN-Rechnung"
+
+#: community_store_quick_pos/src/Labels.php:53
+msgid "Not you?"
+msgstr "Nicht du?"
+
+#: community_store_quick_pos/src/Labels.php:54
+msgid "Start shopping"
+msgstr "Einkaufen"
+
+#: community_store_quick_pos/src/Labels.php:55
+msgid "Sign out"
+msgstr "Abmelden"
+
+#: community_store_quick_pos/src/Labels.php:56
+msgid "Check out"
+msgstr "Bezahlen"
+
+#: community_store_quick_pos/src/Labels.php:57
+msgid "Everything goes on your LAN tab, you pay when you leave."
+msgstr "Alles kommt auf deine LAN-Rechnung, du bezahlst, wenn du gehst."
+
+#: community_store_quick_pos/src/Labels.php:58
+msgid "Review your cart"
+msgstr "Warenkorb prüfen"
+
+#: community_store_quick_pos/src/Labels.php:59
+msgid "Keep shopping"
+msgstr "Weiter einkaufen"
+
+#: community_store_quick_pos/src/Labels.php:60
+msgid "Setting a quantity to 0 removes the item."
+msgstr "Menge 0 entfernt den Artikel."
+
+#: community_store_quick_pos/src/Labels.php:61
+msgid "Put it on my tab"
+msgstr "Auf meine Rechnung"
+
+#: community_store_quick_pos/src/Labels.php:62
+msgid "You confirm with your badge in the next step."
+msgstr "Im nächsten Schritt bestätigst du mit deinem Badge."
+
+#: community_store_quick_pos/src/Labels.php:63
+msgid "Confirm"
+msgstr "Bestätigen"
+
+#: community_store_quick_pos/src/Labels.php:64
+msgid "Confirm with your badge"
+msgstr "Mit deinem Badge bestätigen"
+
+#: community_store_quick_pos/src/Labels.php:65
+msgid "Hold your badge to the reader once more. Only then is it put on your tab."
+msgstr "Halte deinen Badge nochmals an den Leser. Erst dann kommt es auf deine Rechnung."
+
+#: community_store_quick_pos/src/Labels.php:66
+#: community_store_quick_pos/src/Labels.php:107
+msgid "Amount"
+msgstr "Betrag"
+
+#: community_store_quick_pos/src/Labels.php:67
+msgid "Tab after"
+msgstr "Rechnung danach"
+
+#: community_store_quick_pos/src/Labels.php:68
+msgid "Back to the cart"
+msgstr "Zurück zum Warenkorb"
+
+#: community_store_quick_pos/src/Labels.php:69
+msgid "Waiting for badge …"
+msgstr "Warte auf Badge …"
+
+#: community_store_quick_pos/src/Labels.php:70
+#, php-format
+msgid "Thanks, %s!"
+msgstr "Danke, %s!"
+
+#: community_store_quick_pos/src/Labels.php:71
+msgid "It is on your tab. Take your things from the shelf."
+msgstr "Es ist auf deiner Rechnung. Nimm deine Sachen aus dem Regal."
+
+#: community_store_quick_pos/src/Labels.php:72
+msgid "New tab total"
+msgstr "Neuer Rechnungsbetrag"
+
+#: community_store_quick_pos/src/Labels.php:73
+msgid "Done"
+msgstr "Fertig"
+
+#: community_store_quick_pos/src/Labels.php:74
+#, php-format
+msgid "Signing out in %s"
+msgstr "Abmeldung in %s"
+
+#: community_store_quick_pos/src/Labels.php:75
+msgid "That did not work"
+msgstr "Das hat nicht geklappt"
+
+#: community_store_quick_pos/src/Labels.php:76
+msgid "Edit cart"
+msgstr "Warenkorb bearbeiten"
+
+#: community_store_quick_pos/src/Labels.php:77
+msgid "Cancel"
+msgstr "Abbrechen"
+
+#: community_store_quick_pos/src/Labels.php:78
+msgid "Try again"
+msgstr "Nochmals versuchen"
+
+#: community_store_quick_pos/src/Labels.php:79
+#: community_store_quick_pos/src/Controller/KioskApi.php:144
+msgid "This device is not registered as a kiosk."
+msgstr "Dieses Gerät ist nicht als Kiosk registriert."
+
+#: community_store_quick_pos/src/Labels.php:80
+msgid "Register this device as a kiosk. Afterwards you can sign out: the kiosk keeps working on this device only."
+msgstr "Registriere dieses Gerät als Kiosk. Danach kannst du dich abmelden: Der Kiosk funktioniert weiterhin, nur auf diesem Gerät."
+
+#: community_store_quick_pos/src/Labels.php:81
+msgid "Ask the staff to register this device."
+msgstr "Bitte die Crew, dieses Gerät zu registrieren."
+
+#: community_store_quick_pos/src/Labels.php:82
+msgid "Device name"
+msgstr "Gerätename"
+
+#: community_store_quick_pos/src/Labels.php:83
+msgid "Register this device as a kiosk"
+msgstr "Dieses Gerät als Kiosk registrieren"
+
+#: community_store_quick_pos/src/Labels.php:84
+msgid "Too many unknown badges. Please wait a moment."
+msgstr "Zu viele unbekannte Badges. Bitte warte einen Moment."
+
+#: community_store_quick_pos/src/Labels.php:85
+#: community_store_quick_pos/blocks/quick_pos_kiosk/form.php:24
+msgid "Tab limit"
+msgstr "Rechnungslimit"
+
+#: community_store_quick_pos/src/Labels.php:92
+msgid "Register"
+msgstr "Kasse"
+
+#: community_store_quick_pos/src/Labels.php:93
+msgid "Customer"
+msgstr "Kunde"
+
+#: community_store_quick_pos/src/Labels.php:94
+msgid "Walk-in customer"
+msgstr "Laufkundschaft"
+
+#: community_store_quick_pos/src/Labels.php:95
+msgid "Name or e-mail"
+msgstr "Name oder E-Mail"
+
+#: community_store_quick_pos/src/Labels.php:96
+msgid "Find customer"
+msgstr "Kunde suchen"
+
+#: community_store_quick_pos/src/Labels.php:97
+msgid "Scan a badge or search by name."
+msgstr "Badge scannen oder nach Namen suchen."
+
+#: community_store_quick_pos/src/Labels.php:98
+msgid "Clear customer"
+msgstr "Kunde entfernen"
+
+#: community_store_quick_pos/src/Labels.php:99
+#: community_store_quick_pos/src/Sale/SaleService.php:68
+msgid "Store credit"
+msgstr "Guthaben"
+
+#: community_store_quick_pos/src/Labels.php:100
+#: community_store_quick_pos/src/Sale/SaleService.php:69
+msgid "Event tab"
+msgstr "Event-Rechnung"
+
+#: community_store_quick_pos/src/Labels.php:101
+#: community_store_quick_pos/single_pages/dashboard/store/quick_pos.php:16
+msgid "Badges"
+msgstr "Badges"
+
+#: community_store_quick_pos/src/Labels.php:102
+msgid "No badge"
+msgstr "Kein Badge"
+
+#: community_store_quick_pos/src/Labels.php:103
+msgid "Assign badge"
+msgstr "Badge zuweisen"
+
+#: community_store_quick_pos/src/Labels.php:104
+msgid "Scan the new badge now."
+msgstr "Scanne jetzt den neuen Badge."
+
+#: community_store_quick_pos/src/Labels.php:105
+msgid "Badge assigned."
+msgstr "Badge zugewiesen."
+
+#: community_store_quick_pos/src/Labels.php:106
+msgid "Top up credit"
+msgstr "Guthaben aufladen"
+
+#: community_store_quick_pos/src/Labels.php:108
+#, php-format
+msgid "%s loaded. New balance: %s"
+msgstr "%s aufgeladen. Neues Guthaben: %s"
+
+#: community_store_quick_pos/src/Labels.php:109
+msgid "Payment"
+msgstr "Zahlung"
+
+#: community_store_quick_pos/src/Labels.php:110
+#, php-format
+msgid "Booked: #%s · %s"
+msgstr "Gebucht: #%s · %s"
+
+#: community_store_quick_pos/src/Labels.php:111
+msgid "Last sales"
+msgstr "Letzte Verkäufe"
+
+#: community_store_quick_pos/src/Labels.php:112
+msgid "No sales yet."
+msgstr "Noch keine Verkäufe."
+
+#: community_store_quick_pos/src/Labels.php:113
+msgid "New sale"
+msgstr "Neuer Verkauf"
+
+#: community_store_quick_pos/src/Labels.php:114
+msgid "Choose a customer for this payment method."
+msgstr "Wähle für diese Zahlungsart einen Kunden."
+
+#: community_store_quick_pos/src/Labels.php:115
+msgid "Not enough credit"
+msgstr "Nicht genug Guthaben"
+
+#: community_store_quick_pos/elements/block_groups.php:13
+msgid "Product groups"
+msgstr "Produktgruppen"
+
+#: community_store_quick_pos/elements/block_groups.php:14
+msgid "The event's shop groups are always sold. Tick further groups to sell them too, and choose an icon per group."
+msgstr "Die Shop-Gruppen des Events werden immer verkauft. Kreuze weitere Gruppen an, um sie ebenfalls zu verkaufen, und wähle pro Gruppe ein Icon."
+
+#: community_store_quick_pos/elements/block_groups.php:16
+msgid "There are no product groups in the store yet."
+msgstr "Im Store gibt es noch keine Produktgruppen."
+
+#: community_store_quick_pos/elements/block_groups.php:27
+#, php-format
+msgid "Icon of %s"
+msgstr "Icon von %s"
+
+#: community_store_quick_pos/single_pages/dashboard/store/quick_pos.php:16
+msgid "Kiosk devices"
+msgstr "Kiosk-Geräte"
+
+#: community_store_quick_pos/single_pages/dashboard/store/quick_pos.php:16
+msgid "Settings"
+msgstr "Einstellungen"
+
+#: community_store_quick_pos/single_pages/dashboard/store/quick_pos.php:25
+msgid "A device becomes a kiosk when a staff member opens a kiosk page on it and registers it. Revoke lost or retired devices here."
+msgstr "Ein Gerät wird zum Kiosk, wenn jemand von der Crew darauf eine Kiosk-Seite öffnet und es registriert. Verlorene oder ausgemusterte Geräte sperrst du hier."
+
+#: community_store_quick_pos/single_pages/dashboard/store/quick_pos.php:27
+#: community_store_quick_pos/single_pages/dashboard/store/quick_pos.php:37
+msgid "Name"
+msgstr "Name"
+
+#: community_store_quick_pos/single_pages/dashboard/store/quick_pos.php:27
+msgid "Registered"
+msgstr "Registriert"
+
+#: community_store_quick_pos/single_pages/dashboard/store/quick_pos.php:27
+msgid "Last seen"
+msgstr "Zuletzt gesehen"
+
+#: community_store_quick_pos/single_pages/dashboard/store/quick_pos.php:33
+msgid "Revoked"
+msgstr "Gesperrt"
+
+#: community_store_quick_pos/single_pages/dashboard/store/quick_pos.php:38
+#: community_store_quick_pos/single_pages/dashboard/store/quick_pos.php:92
+msgid "Save"
+msgstr "Speichern"
+
+#: community_store_quick_pos/single_pages/dashboard/store/quick_pos.php:46
+msgid "Revoke this device?"
+msgstr "Dieses Gerät sperren?"
+
+#: community_store_quick_pos/single_pages/dashboard/store/quick_pos.php:48
+#: community_store_quick_pos/single_pages/dashboard/store/quick_pos.php:141
+msgid "Revoke"
+msgstr "Sperren"
+
+#: community_store_quick_pos/single_pages/dashboard/store/quick_pos.php:54
+msgid "No kiosk devices yet."
+msgstr "Noch keine Kiosk-Geräte."
+
+#: community_store_quick_pos/single_pages/dashboard/store/quick_pos.php:62
+msgid "Badge reading"
+msgstr "Badge-Erkennung"
+
+#: community_store_quick_pos/single_pages/dashboard/store/quick_pos.php:63
+msgid "Readers often cut characters off the start or end of a badge id. Shorter reads still identify a badge if no other badge matches as well. Changes apply to badges assigned (or imported again) afterwards."
+msgstr "Leser schneiden oft Zeichen am Anfang oder Ende einer Badge-ID ab. Kürzere Lesungen erkennen einen Badge trotzdem, wenn kein anderer Badge genauso gut passt. Änderungen gelten für Badges, die danach zugewiesen (oder erneut importiert) werden."
+
+#: community_store_quick_pos/single_pages/dashboard/store/quick_pos.php:66
+msgid "Minimum characters of a read"
+msgstr "Mindestanzahl Zeichen pro Lesung"
+
+#: community_store_quick_pos/single_pages/dashboard/store/quick_pos.php:70
+msgid "Characters that may be missing"
+msgstr "Zeichen, die fehlen dürfen"
+
+#: community_store_quick_pos/single_pages/dashboard/store/quick_pos.php:76
+#: community_store_quick_pos/src/Device/DeviceService.php:62
+msgid "Kiosk"
+msgstr "Kiosk"
+
+#: community_store_quick_pos/single_pages/dashboard/store/quick_pos.php:79
+msgid "Session length (s)"
+msgstr "Sitzungsdauer (s)"
+
+#: community_store_quick_pos/single_pages/dashboard/store/quick_pos.php:83
+msgid "Unknown badges per minute"
+msgstr "Unbekannte Badges pro Minute"
+
+#: community_store_quick_pos/single_pages/dashboard/store/quick_pos.php:87
+msgid "Then locked for (s)"
+msgstr "Danach gesperrt für (s)"
+
+#: community_store_quick_pos/single_pages/dashboard/store/quick_pos.php:100
+msgid "Assign a badge"
+msgstr "Badge zuweisen"
+
+#: community_store_quick_pos/single_pages/dashboard/store/quick_pos.php:102
+msgid "User name or e-mail"
+msgstr "Benutzername oder E-Mail"
+
+#: community_store_quick_pos/single_pages/dashboard/store/quick_pos.php:106
+msgid "Badge id (scan it into this field)"
+msgstr "Badge-ID (in dieses Feld scannen)"
+
+#: community_store_quick_pos/single_pages/dashboard/store/quick_pos.php:109
+msgid "Assign"
+msgstr "Zuweisen"
+
+#: community_store_quick_pos/single_pages/dashboard/store/quick_pos.php:114
+msgid "Import from the credit manager"
+msgstr "Aus dem Credit Manager importieren"
+
+#: community_store_quick_pos/single_pages/dashboard/store/quick_pos.php:115
+#, php-format
+msgid "%s users have a \"badge_id\" attribute (credit manager). Import them as badges; running it again is safe."
+msgstr "%s Benutzer haben ein Attribut „badge_id“ (Credit Manager). Importiere sie als Badges; ein erneuter Durchlauf ist unbedenklich."
+
+#: community_store_quick_pos/single_pages/dashboard/store/quick_pos.php:118
+msgid "Import badges"
+msgstr "Badges importieren"
+
+#: community_store_quick_pos/single_pages/dashboard/store/quick_pos.php:126
+msgid "User, e-mail or last characters"
+msgstr "Benutzer, E-Mail oder letzte Zeichen"
+
+#: community_store_quick_pos/single_pages/dashboard/store/quick_pos.php:126
+#: community_store_quick_pos/single_pages/dashboard/store/quick_pos.php:127
+msgid "Search"
+msgstr "Suchen"
+
+#: community_store_quick_pos/single_pages/dashboard/store/quick_pos.php:130
+msgid "User"
+msgstr "Benutzer"
+
+#: community_store_quick_pos/single_pages/dashboard/store/quick_pos.php:130
+msgid "Badge"
+msgstr "Badge"
+
+#: community_store_quick_pos/single_pages/dashboard/store/quick_pos.php:130
+msgid "Assigned"
+msgstr "Zugewiesen"
+
+#: community_store_quick_pos/single_pages/dashboard/store/quick_pos.php:130
+msgid "Last used"
+msgstr "Zuletzt benutzt"
+
+#: community_store_quick_pos/single_pages/dashboard/store/quick_pos.php:139
+msgid "Revoke this badge?"
+msgstr "Diesen Badge sperren?"
+
+#: community_store_quick_pos/single_pages/dashboard/store/quick_pos.php:146
+msgid "No badges found."
+msgstr "Keine Badges gefunden."
+
+#: community_store_quick_pos/elements/quick_pos_cash/dashboard_form.php:2
+#: community_store_quick_pos/elements/quick_pos_card/dashboard_form.php:2
+#: community_store_quick_pos/elements/quick_pos_twint/dashboard_form.php:2
+msgid "Used by the Quick POS register only. Keep this method disabled: it must not appear at the web checkout."
+msgstr "Wird nur von der Quick-POS-Kasse verwendet. Lass diese Zahlungsart deaktiviert: Sie darf nicht im Web-Checkout erscheinen."
+
+#: community_store_quick_pos/src/Badge/BadgeService.php:118
+#, php-format
+msgid "The badge id is too short (at least %s letters or digits)."
+msgstr "Die Badge-ID ist zu kurz (mindestens %s Buchstaben oder Ziffern)."
+
+#: community_store_quick_pos/src/Badge/BadgeService.php:121
+msgid "Unknown user."
+msgstr "Unbekannter Benutzer."
+
+#: community_store_quick_pos/src/Badge/BadgeService.php:130
+#, php-format
+msgid "This badge belongs to %s. Revoke it there first."
+msgstr "Dieser Badge gehört %s. Sperre ihn zuerst dort."
+
+#: community_store_quick_pos/src/Badge/BadgeMatch.php:52
+msgid "The badge could not be read completely. Please scan it again."
+msgstr "Der Badge konnte nicht vollständig gelesen werden. Bitte scanne ihn nochmals."
+
+#: community_store_quick_pos/src/Badge/BadgeMatch.php:54
+msgid "This badge is not registered. Ask at the counter."
+msgstr "Dieser Badge ist nicht registriert. Frag an der Theke nach."
+
+#: community_store_quick_pos/src/Sale/Catalog.php:111
+msgid "A product in the cart is not sold here any more. Please start again."
+msgstr "Ein Artikel im Warenkorb wird hier nicht mehr verkauft. Bitte fang nochmals an."
+
+#: community_store_quick_pos/src/Sale/Catalog.php:114
+#, php-format
+msgid "Too many of %s."
+msgstr "Zu viele von %s."
+
+#: community_store_quick_pos/src/Sale/Catalog.php:118
+#, php-format
+msgid "%s is sold out."
+msgstr "%s ist ausverkauft."
+
+#: community_store_quick_pos/src/Sale/Catalog.php:118
+#, php-format
+msgid "Only %s × %s left."
+msgstr "Nur noch %s × %s übrig."
+
+#: community_store_quick_pos/src/Sale/Catalog.php:123
+msgid "The cart is empty."
+msgstr "Der Warenkorb ist leer."
+
+#: community_store_quick_pos/src/Sale/EventTab.php:105
+msgid "There is no event running right now."
+msgstr "Im Moment läuft kein Event."
+
+#: community_store_quick_pos/src/Sale/EventTab.php:107
+msgid "This event has no tab."
+msgstr "Dieses Event hat keine Event-Rechnung."
+
+#: community_store_quick_pos/src/Sale/EventTab.php:109
+msgid "You are not signed up for this event."
+msgstr "Du bist nicht für dieses Event angemeldet."
+
+#: community_store_quick_pos/src/Sale/EventTab.php:111
+msgid "You are not checked in yet. Please check in at the entrance first."
+msgstr "Du bist noch nicht eingecheckt. Bitte checke zuerst am Eingang ein."
+
+#: community_store_quick_pos/src/Sale/EventTab.php:113
+msgid "Your tab is already settled."
+msgstr "Deine Rechnung ist bereits abgerechnet."
+
+#: community_store_quick_pos/src/Sale/EventTab.php:139
+#, php-format
+msgid "This would take your tab over the limit of %s. Please settle it at the counter first."
+msgstr "Damit würde deine Rechnung das Limit von %s übersteigen. Bitte rechne sie zuerst an der Theke ab."
+
+#: community_store_quick_pos/src/Sale/SaleService.php:65
+msgid "Cash"
+msgstr "Bar"
+
+#: community_store_quick_pos/src/Sale/SaleService.php:66
+msgid "Card"
+msgstr "Karte"
+
+#: community_store_quick_pos/src/Sale/SaleService.php:67
+msgid "TWINT"
+msgstr "TWINT"
+
+#: community_store_quick_pos/src/Sale/SaleService.php:90
+#: community_store_quick_pos/src/Sale/SaleService.php:194
+msgid "Unknown payment method."
+msgstr "Unbekannte Zahlungsart."
+
+#: community_store_quick_pos/src/Sale/SaleService.php:93
+#: community_store_quick_pos/src/Sale/SaleService.php:201
+msgid "Choose the customer first."
+msgstr "Wähle zuerst den Kunden."
+
+#: community_store_quick_pos/src/Sale/SaleService.php:112
+#, php-format
+msgid "Quick POS sale #%s"
+msgstr "Quick-POS-Verkauf #%s"
+
+#: community_store_quick_pos/src/Sale/SaleService.php:125
+#: community_store_quick_pos/src/Sale/SaleService.php:191
+msgid "Store credit is not available."
+msgstr "Guthaben ist nicht verfügbar."
+
+#: community_store_quick_pos/src/Sale/SaleService.php:131
+#: community_store_quick_pos/src/Sale/SaleService.php:137
+#, php-format
+msgid "The store credit (%s) does not cover %s."
+msgstr "Das Guthaben (%s) deckt %s nicht."
+
+#: community_store_quick_pos/src/Sale/SaleService.php:164
+#: community_store_quick_pos/src/Sale/SaleService.php:171
+msgid "The sale could not be booked, please try again."
+msgstr "Der Verkauf konnte nicht gebucht werden, bitte versuche es nochmals."
+
+#: community_store_quick_pos/src/Sale/SaleService.php:198
+msgid "Enter an amount between 0.05 and 1000."
+msgstr "Gib einen Betrag zwischen 0.05 und 1000 ein."
+
+#: community_store_quick_pos/src/Sale/SaleService.php:211
+#, php-format
+msgid "Top-up at the POS (%s), #%s"
+msgstr "Aufladung an der Kasse (%s), #%s"
+
+#: community_store_quick_pos/src/Sale/SaleService.php:215
+msgid "Store credit top-up"
+msgstr "Guthaben-Aufladung"
+
+#: community_store_quick_pos/src/Sale/SaleService.php:227
+msgid "The top-up could not be booked, please try again."
+msgstr "Die Aufladung konnte nicht gebucht werden, bitte versuche es nochmals."
+
+#: community_store_quick_pos/src/Sale/SaleService.php:330
+#, php-format
+msgid "The payment method %s is not installed."
+msgstr "Die Zahlungsart %s ist nicht installiert."
+
+#: community_store_quick_pos/src/Sale/SaleService.php:388
+msgid "Invalid request, please start again."
+msgstr "Ungültige Anfrage, bitte fang nochmals an."
+
+#: community_store_quick_pos/src/Controller/KioskApi.php:37
+#: community_store_quick_pos/src/Controller/RegisterApi.php:198
+msgid "Your session expired. Please reload the page."
+msgstr "Deine Sitzung ist abgelaufen. Bitte lade die Seite neu."
+
+#: community_store_quick_pos/src/Controller/KioskApi.php:40
+msgid "Only staff can register a kiosk."
+msgstr "Nur die Crew kann einen Kiosk registrieren."
+
+#: community_store_quick_pos/src/Controller/KioskApi.php:98
+msgid "Your session ran out. Please scan your badge again."
+msgstr "Deine Sitzung ist abgelaufen. Bitte scanne deinen Badge nochmals."
+
+#: community_store_quick_pos/src/Controller/KioskApi.php:105
+msgid "This is not the badge you signed in with."
+msgstr "Das ist nicht der Badge, mit dem du dich angemeldet hast."
+
+#: community_store_quick_pos/src/Controller/KioskApi.php:148
+msgid "This kiosk was removed. Please reload the page."
+msgstr "Dieser Kiosk wurde entfernt. Bitte lade die Seite neu."
+
+#: community_store_quick_pos/src/Controller/KioskApi.php:162
+#: community_store_quick_pos/src/Controller/KioskApi.php:169
+#, php-format
+msgid "Too many unknown badges. Please wait %s seconds."
+msgstr "Zu viele unbekannte Badges. Bitte warte %s Sekunden."
+
+#: community_store_quick_pos/src/Controller/RegisterApi.php:49
+msgid "Unknown customer."
+msgstr "Unbekannter Kunde."
+
+#: community_store_quick_pos/src/Controller/RegisterApi.php:89
+msgid "This payment method is not offered here."
+msgstr "Diese Zahlungsart wird hier nicht angeboten."
+
+#: community_store_quick_pos/src/Controller/RegisterApi.php:124
+msgid "Top-ups are not offered here."
+msgstr "Aufladungen werden hier nicht angeboten."
+
+#: community_store_quick_pos/src/Controller/RegisterApi.php:201
+msgid "Only staff can use the register."
+msgstr "Nur die Crew kann die Kasse benutzen."
+
+#: community_store_quick_pos/src/Controller/RegisterApi.php:205
+msgid "This register was removed. Please reload the page."
+msgstr "Diese Kasse wurde entfernt. Bitte lade die Seite neu."
+
+#: community_store_quick_pos/blocks/quick_pos_kiosk/controller.php:47
+msgid "Quick POS Kiosk"
+msgstr "Quick POS Kiosk"
+
+#: community_store_quick_pos/blocks/quick_pos_kiosk/controller.php:52
+msgid "Self-service kiosk: visitors scan their badge and put drinks and snacks on their event tab."
+msgstr "Self-Service-Kiosk: Besucher scannen ihren Badge und setzen Getränke und Snacks auf ihre Event-Rechnung."
+
+#: community_store_quick_pos/blocks/quick_pos_kiosk/controller.php:62
+msgid "Drinks, snacks, *cables.*"
+msgstr "Getränke, Snacks, *Kabel.*"
+
+#: community_store_quick_pos/blocks/quick_pos_kiosk/controller.php:63
+msgid "Hold your badge to the reader to shop. Everything goes on your LAN tab."
+msgstr "Halte deinen Badge an den Leser, um einzukaufen. Alles kommt auf deine LAN-Rechnung."
+
+#: community_store_quick_pos/blocks/quick_pos_kiosk/form.php:17
+#: community_store_quick_pos/blocks/quick_pos_register/form.php:16
+msgid "Event"
+msgstr "Event"
+
+#: community_store_quick_pos/blocks/quick_pos_kiosk/form.php:19
+msgid "Kiosk sales go on the event tab of checked-in participants. The event needs the tab enabled."
+msgstr "Kiosk-Verkäufe kommen auf die Event-Rechnung eingecheckter Teilnehmer. Beim Event muss die Event-Rechnung aktiviert sein."
+
+#: community_store_quick_pos/blocks/quick_pos_kiosk/form.php:26
+msgid "The kiosk refuses sales above this tab total. 0 = no limit."
+msgstr "Der Kiosk lehnt Verkäufe über diesem Rechnungsbetrag ab. 0 = kein Limit."
+
+#: community_store_quick_pos/blocks/quick_pos_kiosk/form.php:29
+msgid "Sign out after (seconds)"
+msgstr "Abmelden nach (Sekunden)"
+
+#: community_store_quick_pos/blocks/quick_pos_kiosk/form.php:31
+msgid "Without a touch, the kiosk signs the customer out."
+msgstr "Ohne Berührung meldet der Kiosk die Person ab."
+
+#: community_store_quick_pos/blocks/quick_pos_kiosk/form.php:35
+msgid "Headline of the start screen"
+msgstr "Titel des Startbildschirms"
+
+#: community_store_quick_pos/blocks/quick_pos_kiosk/form.php:37
+msgid "Put *stars* around a word to highlight it."
+msgstr "Setze *Sterne* um ein Wort, um es hervorzuheben."
+
+#: community_store_quick_pos/blocks/quick_pos_kiosk/form.php:40
+msgid "Text of the start screen"
+msgstr "Text des Startbildschirms"
+
+#: community_store_quick_pos/blocks/quick_pos_kiosk/form.php:45
+msgid "Cover the whole screen (hides the page around the kiosk)"
+msgstr "Ganzen Bildschirm füllen (blendet die Seite um den Kiosk aus)"
+
+#: community_store_quick_pos/blocks/quick_pos_kiosk/view.php:15
+msgid "The kiosk needs JavaScript."
+msgstr "Der Kiosk braucht JavaScript."
+
+#: community_store_quick_pos/blocks/quick_pos_register/controller.php:42
+msgid "Quick POS Register"
+msgstr "Quick POS Kasse"
+
+#: community_store_quick_pos/blocks/quick_pos_register/controller.php:47
+msgid "Register for the staff: cash, card, TWINT, store credit or the event tab, and credit top-ups."
+msgstr "Kasse für die Crew: Bar, Karte, TWINT, Guthaben oder Event-Rechnung sowie Guthaben-Aufladungen."
+
+#: community_store_quick_pos/blocks/quick_pos_register/form.php:18
+msgid "Sales \"on the tab\" go to this event's tab; its shop groups are sold here."
+msgstr "Verkäufe „auf Rechnung“ gehen auf die Event-Rechnung dieses Events; seine Shop-Gruppen werden hier verkauft."
+
+#: community_store_quick_pos/blocks/quick_pos_register/form.php:22
+msgid "Payment methods"
+msgstr "Zahlungsarten"
+
+#: community_store_quick_pos/blocks/quick_pos_register/form.php:29
+msgid "Store credit needs the Community Store Credit package, the event tab the Community Event Manager."
+msgstr "Guthaben braucht das Paket Community Store Credit, die Event-Rechnung den Community Event Manager."
+
+#: community_store_quick_pos/blocks/quick_pos_register/form.php:33
+msgid "Staff can top up store credit here"
+msgstr "Crew kann hier Guthaben aufladen"
+
+#: community_store_quick_pos/blocks/quick_pos_register/view.php:12
+msgid "The register is for the staff only. Please sign in."
+msgstr "Die Kasse ist nur für die Crew. Bitte melde dich an."
+
+#: community_store_quick_pos/blocks/quick_pos_register/view.php:20
+msgid "The register needs JavaScript."
+msgstr "Die Kasse braucht JavaScript."
+
+#: community_store_quick_pos/controllers/single_page/dashboard/store/quick_pos.php:46
+msgid "No user with this name or e-mail."
+msgstr "Kein Benutzer mit diesem Namen oder dieser E-Mail."
+
+#: community_store_quick_pos/controllers/single_page/dashboard/store/quick_pos.php:49
+#, php-format
+msgid "Badge assigned to %s."
+msgstr "Badge %s zugewiesen."
+
+#: community_store_quick_pos/controllers/single_page/dashboard/store/quick_pos.php:62
+msgid "Badge revoked."
+msgstr "Badge gesperrt."
+
+#: community_store_quick_pos/controllers/single_page/dashboard/store/quick_pos.php:72
+#, php-format
+msgid "%s badges imported, %s refreshed."
+msgstr "%s Badges importiert, %s aktualisiert."
+
+#: community_store_quick_pos/controllers/single_page/dashboard/store/quick_pos.php:74
+#, php-format
+msgid "Skipped: %s"
+msgstr "Übersprungen: %s"
+
+#: community_store_quick_pos/controllers/single_page/dashboard/store/quick_pos.php:86
+msgid "Device renamed."
+msgstr "Gerät umbenannt."
+
+#: community_store_quick_pos/controllers/single_page/dashboard/store/quick_pos.php:96
+msgid "Device revoked: it no longer works as a kiosk."
+msgstr "Gerät gesperrt: Es funktioniert nicht mehr als Kiosk."
+
+#: community_store_quick_pos/controllers/single_page/dashboard/store/quick_pos.php:111
+msgid "Settings saved."
+msgstr "Einstellungen gespeichert."
+
+#: community_store_quick_pos/src/CommunityStore/Payment/Methods/QuickPosCash/QuickPosCashPaymentMethod.php:13
+msgid "Cash (POS)"
+msgstr "Bar (Kasse)"
+
+#: community_store_quick_pos/src/CommunityStore/Payment/Methods/QuickPosCard/QuickPosCardPaymentMethod.php:13
+msgid "Card (POS)"
+msgstr "Karte (Kasse)"
+
+#: community_store_quick_pos/src/CommunityStore/Payment/Methods/QuickPosTwint/QuickPosTwintPaymentMethod.php:13
+msgid "TWINT (POS)"
+msgstr "TWINT (Kasse)"

@@ -31,7 +31,7 @@ class Controller extends Package
     protected $pkgHandle = 'community_store_quick_pos';
     protected $appVersionRequired = '9.0.0';
     protected $phpVersionRequired = '8.0';
-    protected $pkgVersion = '0.1.0';
+    protected $pkgVersion = '0.2.0';
     protected $pkgAutoloaderRegistries = [
         'src' => 'CommunityStoreQuickPos',
         // Community Store loads payment methods from Concrete\Package\<Package>\Src\CommunityStore\Payment\Methods\…
@@ -50,6 +50,10 @@ class Controller extends Package
 
     public function on_start()
     {
+        // figures for the block "Event Figure" (community_event_manager): only asked for when that package is installed
+        $this->app->make('director')->addListener('on_event_figures_register', static function ($event) {
+            \CommunityStoreQuickPos\Figure\ShopFigures::register($event->getSubject());
+        });
         $router = $this->app->make(Router::class);
         $kiosk = 'CommunityStoreQuickPos\Controller\KioskApi::';
         foreach (['enroll', 'scan', 'checkout', 'logout'] as $action) {

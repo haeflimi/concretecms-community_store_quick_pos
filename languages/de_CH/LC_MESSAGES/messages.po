@@ -954,3 +954,15 @@ msgstr "Karte (Kasse)"
 #: community_store_quick_pos/src/CommunityStore/Payment/Methods/QuickPosTwint/QuickPosTwintPaymentMethod.php:13
 msgid "TWINT (POS)"
 msgstr "TWINT (Kasse)"
+
+msgid "Items sold of a product (search text)"
+msgstr "Verkaufte Stück eines Produkts (Suchtext)"
+
+msgid "Kiosk badges handed out"
+msgstr "Ausgegebene Kiosk-Badges"
+
+msgid "Paid orders"
+msgstr "Bezahlte Bestellungen"
+
+msgid "Shop & kiosk"
+msgstr "Shop & Kiosk"

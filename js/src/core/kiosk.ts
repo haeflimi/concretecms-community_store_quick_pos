@@ -7,6 +7,8 @@ export type KioskScreen = 'enroll' | 'unavailable' | 'idle' | 'login' | 'catalog
 export interface KioskState {
   screen: KioskScreen
   customer: KioskCustomer | null
+  /** signed in without a badge (page editor): paying is confirmed with a button */
+  self: boolean
   cart: Cart
   /** 0 = favourites, else a group ID */
   category: number
@@ -29,13 +31,15 @@ const RELOAD_AFTER_MS = 30 * 60 * 1000
 
 /**
  * The kiosk flow, independent of the UI framework: idle → (badge) login → catalog ⇄ cart → pay → (badge) done.
- * Pass Vue's reactive() as makeReactive and render from kiosk.state.
+ * Visitors who may edit the page (config.self) are signed in as themselves when the kiosk starts and confirm with a
+ * button instead of the second scan. Pass Vue's reactive() as makeReactive and render from kiosk.state.
  */
 export function createKiosk(config: KioskConfig, makeReactive: <T extends object>(o: T) => T = (o) => o) {
   const L = config.labels
   const state = makeReactive<KioskState>({
     screen: !config.enrolled ? 'enroll' : !config.available || config.products.length === 0 ? 'unavailable' : 'idle',
     customer: null,
+    self: false,
     cart: {},
     category: config.categories[0]?.id ?? 0,
     favourites: [],
@@ -55,7 +59,7 @@ export function createKiosk(config: KioskConfig, makeReactive: <T extends object
   let noticeTimer: number | undefined
 
   const call = <T>(action: string, data: Record<string, string | number | null | undefined> = {}) =>
-    post<T>(`${config.api}/${action}`, { bID: config.bID, ...data }, L.networkError)
+    post<T>(`${config.api}/${action}`, { cID: config.cID, ...data }, L.networkError)
 
   // ---- derived
 
@@ -103,6 +107,7 @@ export function createKiosk(config: KioskConfig, makeReactive: <T extends object
     clearTimers()
     if (state.customer) call('logout').catch(() => undefined)
     state.customer = null
+    state.self = false
     clearCart(state.cart)
     state.detail = null
     state.error = null
@@ -119,16 +124,26 @@ export function createKiosk(config: KioskConfig, makeReactive: <T extends object
   }
 
   async function login(tag: string) {
+    await signIn('scan', { tag })
+  }
+
+  async function loginSelf() {
+    if (!config.self) return
+    await signIn('self', { ccm_token: config.selfToken })
+  }
+
+  async function signIn(action: 'scan' | 'self', data: Record<string, string | number | null | undefined>) {
     if (state.busy) return
     state.busy = true
     try {
-      const data = await call<{ customer: KioskCustomer; favourites: number[]; stock: Record<number, number | null> }>('scan', { tag })
-      state.customer = data.customer
-      state.favourites = data.favourites
-      Object.assign(state.stock, data.stock)
+      const result = await call<{ customer: KioskCustomer; favourites: number[]; stock: Record<number, number | null> }>(action, data)
+      state.self = action === 'self'
+      state.customer = result.customer
+      state.favourites = result.favourites
+      Object.assign(state.stock, result.stock)
       clearCart(state.cart)
       cartID = uuid()
-      state.category = data.favourites.length ? 0 : config.categories[0]?.id ?? 0
+      state.category = result.favourites.length ? 0 : config.categories[0]?.id ?? 0
       go('login')
     } catch (error) {
       if (error instanceof ApiError && error.data.customer) {
@@ -146,11 +161,21 @@ export function createKiosk(config: KioskConfig, makeReactive: <T extends object
   }
 
   async function confirm(tag: string) {
+    await checkout({ tag })
+  }
+
+  /** page editors: no second scan, a button confirms */
+  async function confirmSelf() {
+    if (!state.self || state.screen !== 'pay') return
+    await checkout({ ccm_token: config.selfToken })
+  }
+
+  async function checkout(proof: Record<string, string | number | null | undefined>) {
     if (state.busy) return
     state.busy = true
     const items = Object.fromEntries(Object.entries(state.cart))
     try {
-      const data = await call<{ receipt: Receipt; stock: Record<number, number | null> }>('checkout', { tag, uuid: cartID, items: JSON.stringify(items) })
+      const data = await call<{ receipt: Receipt; stock: Record<number, number | null> }>('checkout', { ...proof, uuid: cartID, items: JSON.stringify(items) })
       state.receipt = data.receipt
       Object.assign(state.stock, data.stock)
       if (state.customer && data.receipt.tabTotal !== null) {
@@ -188,9 +213,17 @@ export function createKiosk(config: KioskConfig, makeReactive: <T extends object
   function scanned(tag: string) {
     if (state.screen === 'idle' || state.screen === 'login' || (state.screen === 'error' && state.error?.back === 'idle')) {
       login(tag)
-    } else if (state.screen === 'pay') {
+    } else if (state.screen === 'pay' && !state.self) {
       confirm(tag)
     }
+  }
+
+  /** empties the cart and stays on the catalog (the "Reset" button beneath "Check out") */
+  const reset = () => {
+    clearCart(state.cart)
+    state.detail = null
+    cartID = uuid()
+    touch()
   }
 
   const add = (id: number, qty = 1) => {
@@ -266,12 +299,15 @@ export function createKiosk(config: KioskConfig, makeReactive: <T extends object
       state.detail = null
     },
     add,
+    reset,
     setQty: (id: number, qty: number) => {
       const p = product(id)
       if (p) setQty(state.cart, p, qty)
       touch()
     },
     scanned,
+    loginSelf,
+    confirmSelf,
     async enroll(name: string) {
       state.busy = true
       try {
@@ -289,6 +325,7 @@ export function createKiosk(config: KioskConfig, makeReactive: <T extends object
       const uncover = config.fullscreen ? coverScreen() : () => undefined
       const activity = () => touch()
       document.addEventListener('pointerdown', activity, true)
+      if (config.self && state.screen === 'idle') loginSelf()
       return () => {
         stop()
         uncover()

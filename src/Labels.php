@@ -53,7 +53,9 @@ class Labels
             'notYou' => t('Not you?'),
             'shop' => t('Start shopping'),
             'signOut' => t('Sign out'),
-            'toCart' => t('Check out'),
+            // not t('Check out'): the event manager translates that as leaving the event, and translations are shared
+            'toCart' => t('Proceed to checkout'),
+            'reset' => t('Reset'),
             'cartFootnote' => t('Everything goes on your LAN tab, you pay when you leave.'),
             'reviewCart' => t('Review your cart'),
             'continueShopping' => t('Keep shopping'),
@@ -83,6 +85,13 @@ class Labels
             'enroll' => t('Register this device as a kiosk'),
             'locked' => t('Too many unknown badges. Please wait a moment.'),
             'tabLimit' => t('Tab limit'),
+            // page editors, no badge needed
+            'selfSignIn' => t('Use the kiosk as %s'),
+            'selfHint' => t('No badge reader? You may edit this page, so you can sign in without a badge.'),
+            'selfRecognised' => t('Signed in without a badge'),
+            'selfPayFootnote' => t('You confirm in the next step.'),
+            'selfConfirmTitle' => t('Confirm your order'),
+            'selfConfirmText' => t('You are signed in without a badge, so there is no second scan. Confirm to put it on your tab.'),
         ];
     }
 

@@ -2,7 +2,8 @@
 import type { Labels, Product } from '../core'
 import { fill } from '../core'
 
-defineProps<{ product: Product; inCart: number; labels: Labels }>()
+// iconHtml: the picked icon's markup (config.icons) for a product without a picture, else the first letter shows
+defineProps<{ product: Product; inCart: number; labels: Labels; iconHtml?: string }>()
 defineEmits<{ open: []; add: [] }>()
 </script>
 
@@ -10,6 +11,7 @@ defineEmits<{ open: []; add: [] }>()
   <div class="card h-100 qpos-product" :class="{ 'opacity-50': product.stock === 0 }">
     <button type="button" class="qpos-product-media btn p-0 border-0" :aria-label="product.name" @click="$emit('open')">
       <img v-if="product.image" :src="product.image" :alt="product.name" class="card-img-top" loading="lazy" />
+      <span v-else-if="iconHtml" class="qpos-product-placeholder card-img-top" v-html="iconHtml" />
       <span v-else class="qpos-product-placeholder card-img-top">{{ product.name.charAt(0) }}</span>
     </button>
     <div class="card-body d-flex flex-column gap-1 p-2">

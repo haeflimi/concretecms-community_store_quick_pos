@@ -2,6 +2,7 @@
 
 namespace CommunityStoreQuickPos\Sale;
 
+use CommunityStoreQuickPos\PosIcons;
 use Concrete\Core\Error\UserMessageException;
 use Concrete\Package\CommunityStore\Src\CommunityStore\Group\Group;
 use Concrete\Package\CommunityStore\Src\CommunityStore\Product\Product;
@@ -11,9 +12,10 @@ use Concrete\Package\CommunityStore\Src\CommunityStore\Utilities\Price;
 defined('C5_EXECUTE') or die('Access Denied.');
 
 /**
- * What a POS block sells: one category per store product group (the event's shop groups plus the groups chosen in
- * the block), with the products that can be sold with a single tap (active, no variations, no required options).
- * Every sale is checked against this list, so a request can't buy anything else.
+ * What a POS sells: one category per store product group (the event's shop groups plus the groups chosen for the
+ * kiosk page or register block), with the products that can be sold with a single tap (active, no variations, no
+ * required options). Every sale is checked against this list, so a request can't buy anything else. Category icons
+ * and the icons of products without a picture come from the icon picker (PosIcons).
  */
 class Catalog
 {
@@ -25,9 +27,8 @@ class Catalog
 
     /**
      * @param int[] $groupIDs in display order
-     * @param array<int, string> $icons group ID => Lucide icon name
      */
-    public function __construct(array $groupIDs, array $icons = [])
+    public function __construct(array $groupIDs)
     {
         foreach (array_unique(array_map('intval', $groupIDs)) as $gID) {
             $group = Group::getByID($gID);
@@ -42,6 +43,7 @@ class Catalog
             $list->setSortByDirection('asc');
             $list->setItemsPerPage(300);
             $ids = [];
+            $names = [];
             foreach ($list->getResults() as $product) {
                 if (!self::isQuickProduct($product)) {
                     continue;
@@ -49,9 +51,11 @@ class Catalog
                 $pID = (int) $product->getID();
                 $this->products[$pID] = $product;
                 $ids[] = $pID;
+                $names[] = (string) $product->getName();
             }
             if ($ids !== []) {
-                $this->categories[$gID] = ['id' => $gID, 'name' => (string) $group->getGroupName(), 'icon' => (string) ($icons[$gID] ?? 'package'), 'products' => $ids];
+                $name = (string) $group->getGroupName();
+                $this->categories[$gID] = ['id' => $gID, 'name' => $name, 'icon' => PosIcons::category($name, $names), 'products' => $ids];
             }
         }
     }
@@ -127,14 +131,16 @@ class Catalog
     }
 
     /**
-     * Data for the POS views.
+     * Data for the POS views: the categories, the products (with a picked icon when they have no picture) and the
+     * markup of every icon used, for views without an icon component.
      *
-     * @return array{categories: array, products: array}
+     * @return array{categories: array, products: array, icons: array<string, string>}
      */
     public function toArray(): array
     {
         $images = app('helper/image');
         $products = [];
+        $icons = array_column($this->categories, 'icon');
         foreach ($this->products as $pID => $product) {
             $image = null;
             $file = $product->getImageObj();
@@ -147,24 +153,30 @@ class Catalog
                 }
             }
             $price = round((float) $product->getActivePrice(), 2);
+            $description = trim(mb_substr(trim(html_entity_decode(strip_tags((string) $product->getDesc()), ENT_QUOTES, 'UTF-8')), 0, 240));
+            $categories = array_values(array_filter($this->categories, static function ($category) use ($pID) {
+                return in_array($pID, $category['products'], true);
+            }));
+            // no picture: an icon picked for the product, until then the icon of its category
+            $icon = $image === null ? PosIcons::product((string) $product->getName(), $description, $categories[0]['icon'] ?? PosIcons::FALLBACK) : null;
+            if ($icon !== null) {
+                $icons[] = $icon;
+            }
             $products[] = [
                 'id' => $pID,
                 'name' => (string) $product->getName(),
                 'price' => $price,
                 'priceLabel' => strip_tags((string) Price::format($price)),
                 'image' => $image,
-                'description' => trim(mb_substr(trim(html_entity_decode(strip_tags((string) $product->getDesc()), ENT_QUOTES, 'UTF-8')), 0, 240)),
+                'icon' => $icon,
+                'description' => $description,
                 'stock' => self::stock($product),
                 'maxQty' => $product->allowQuantity() ? 99 : 1,
-                'categories' => array_values(array_map(static function ($category) {
-                    return $category['id'];
-                }, array_filter($this->categories, static function ($category) use ($pID) {
-                    return in_array($pID, $category['products'], true);
-                }))),
+                'categories' => array_column($categories, 'id'),
             ];
         }
 
-        return ['categories' => array_values($this->categories), 'products' => $products];
+        return ['categories' => array_values($this->categories), 'products' => $products, 'icons' => PosIcons::html($icons)];
     }
 
     /**

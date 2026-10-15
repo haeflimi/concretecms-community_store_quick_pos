@@ -5,26 +5,31 @@ namespace CommunityStoreQuickPos\Controller;
 use CommunityStoreQuickPos\Badge\BadgeMatch;
 use CommunityStoreQuickPos\Badge\BadgeService;
 use CommunityStoreQuickPos\Device\DeviceService;
+use CommunityStoreQuickPos\Kiosk;
 use CommunityStoreQuickPos\PosBlock;
 use CommunityStoreQuickPos\Sale\EventTab;
 use CommunityStoreQuickPos\Sale\SaleService;
 use CommunityStoreQuickPos\Settings;
-use Concrete\Core\Block\Block;
 use Concrete\Core\Controller\Controller;
 use Concrete\Core\Error\UserMessageException;
+use Concrete\Core\Page\Page;
+use Concrete\Core\User\UserInfo;
+use Concrete\Core\User\UserInfoRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 defined('C5_EXECUTE') or die('Access Denied.');
 
 /**
- * JSON endpoints of the self-service kiosk (/ccm/quick_pos/kiosk/…). Every request needs an enrolled device (cookie,
- * SameSite=Strict, so no CSRF token is needed and a tablet can stay open for days). A scan identifies the customer
- * for this device's session; the badge is never sent back. Paying needs a second scan of the same person's badge.
+ * JSON endpoints of the self-service kiosk (/ccm/quick_pos/kiosk/…), each for a kiosk page ("cID"). Every request
+ * needs an enrolled device (cookie, SameSite=Strict, so no CSRF token is needed and a tablet can stay open for
+ * days). A scan identifies the customer for this device's session; the badge is never sent back. Paying needs a
+ * second scan of the same person's badge. Signed-in users who may edit the kiosk page need no badge: "self" signs
+ * them in as themselves (CSRF token from the page), and their checkout is confirmed with a button instead.
  */
 class KioskApi extends Controller
 {
-    public const BLOCK = 'quick_pos_kiosk';
     public const ENROLL_TOKEN = 'quick_pos_enroll';
+    public const SELF_TOKEN = 'quick_pos_self';
     public const SESSION = 'quick_pos.kiosk';
 
     /**
@@ -51,7 +56,7 @@ class KioskApi extends Controller
      */
     public function scan(): JsonResponse
     {
-        [$device, $block, $error] = $this->context();
+        [$device, $page, $error] = $this->context();
         if ($error) {
             return $error;
         }
@@ -60,53 +65,95 @@ class KioskApi extends Controller
         if ($match instanceof JsonResponse) {
             return $match;
         }
-        $controller = $block->getController();
-        $event = PosBlock::event((int) $controller->eventID);
-        $status = $this->app->make(EventTab::class)->status($event, (int) $match->user->getUserID());
+
+        return $this->signIn($device, $page, $match->user, false);
+    }
+
+    /**
+     * No badge: a signed-in user who may edit the kiosk's page shops as themselves.
+     */
+    public function self(): JsonResponse
+    {
+        [$device, $page, $error] = $this->context();
+        if ($error) {
+            return $error;
+        }
+        $this->session()->remove(self::SESSION);
+        if (!$this->app->make('token')->validate(self::SELF_TOKEN, (string) $this->request->request->get('ccm_token'))) {
+            return $this->fail(t('Your session expired. Please reload the page.'), 400, 'token');
+        }
+        $user = $this->editor($page);
+        if ($user === null) {
+            return $this->fail(t('Only people who may edit this page can use the kiosk without a badge.'), 403, 'editor');
+        }
+
+        return $this->signIn($device, $page, $user, true);
+    }
+
+    /**
+     * Starts the customer's kiosk session (after a badge match, or as the page editor: $self).
+     */
+    protected function signIn(array $device, Page $page, UserInfo $user, bool $self): JsonResponse
+    {
+        $event = Kiosk::event($page);
+        $status = $this->app->make(EventTab::class)->status($event, (int) $user->getUserID());
         $sales = $this->app->make(SaleService::class);
         // amounts go out as numbers: the browser formats them like the page did (API routes may run in another locale)
-        $customer = PosBlock::person($match->user) + ['seat' => $status['seat'], 'tabTotal' => $status['total']];
+        $customer = PosBlock::person($user) + ['seat' => $status['seat'], 'tabTotal' => $status['total']];
         if ($status['state'] !== EventTab::OK) {
             return new JsonResponse(['ok' => false, 'code' => $status['state'], 'error' => EventTab::message($status['state']), 'customer' => $customer], 403);
         }
-        $this->session()->set(self::SESSION, ['uID' => (int) $match->user->getUserID(), 'deviceID' => $device['id'], 'bID' => (int) $block->getBlockID(), 'startedAt' => time()]);
-        $catalog = PosBlock::catalog($event, $controller->groups);
+        $this->session()->set(self::SESSION, ['uID' => (int) $user->getUserID(), 'deviceID' => $device['id'], 'cID' => (int) $page->getCollectionID(), 'self' => $self, 'startedAt' => time()]);
+        $catalog = Kiosk::catalog($page, $event);
         $products = $catalog->toArray()['products'];
 
         return new JsonResponse([
             'ok' => true,
             'customer' => $customer,
-            'favourites' => $sales->favourites((int) $match->user->getUserID(), array_column($products, 'id')),
+            'favourites' => $sales->favourites((int) $user->getUserID(), array_column($products, 'id')),
             'stock' => array_column($products, 'stock', 'id'),
         ]);
     }
 
     /**
-     * Pay: the cart goes on the customer's event tab, confirmed by scanning the badge again.
+     * Pay: the cart goes on the customer's event tab, confirmed by scanning the badge again (page editors: by the
+     * page's token, they are still signed in as the same user).
      */
     public function checkout(): JsonResponse
     {
-        [$device, $block, $error] = $this->context();
+        [$device, $page, $error] = $this->context();
         if ($error) {
             return $error;
         }
         $session = $this->session()->get(self::SESSION);
-        if (!is_array($session) || (int) $session['deviceID'] !== $device['id'] || (int) $session['bID'] !== (int) $block->getBlockID()
+        if (!is_array($session) || (int) $session['deviceID'] !== $device['id'] || (int) ($session['cID'] ?? 0) !== (int) $page->getCollectionID()
             || (int) $session['startedAt'] < time() - Settings::int('kiosk.session_max', 60, 3600)) {
             $this->session()->remove(self::SESSION);
 
             return $this->fail(t('Your session ran out. Please scan your badge again.'), 401, 'session');
         }
-        $match = $this->match($device['id'], (string) $this->request->request->get('tag', ''));
-        if ($match instanceof JsonResponse) {
-            return $match;
+        if (!empty($session['self'])) {
+            if (!$this->app->make('token')->validate(self::SELF_TOKEN, (string) $this->request->request->get('ccm_token'))) {
+                return $this->fail(t('Your session expired. Please reload the page.'), 400, 'token');
+            }
+            $user = $this->editor($page);
+            if ($user === null || (int) $user->getUserID() !== (int) $session['uID']) {
+                $this->session()->remove(self::SESSION);
+
+                return $this->fail(t('Your session ran out. Please sign in again.'), 401, 'session');
+            }
+        } else {
+            $match = $this->match($device['id'], (string) $this->request->request->get('tag', ''));
+            if ($match instanceof JsonResponse) {
+                return $match;
+            }
+            if ((int) $match->user->getUserID() !== (int) $session['uID']) {
+                return $this->fail(t('This is not the badge you signed in with.'), 409, 'other_badge');
+            }
         }
-        if ((int) $match->user->getUserID() !== (int) $session['uID']) {
-            return $this->fail(t('This is not the badge you signed in with.'), 409, 'other_badge');
-        }
-        $controller = $block->getController();
-        $event = PosBlock::event((int) $controller->eventID);
-        $catalog = PosBlock::catalog($event, $controller->groups);
+        $event = Kiosk::event($page);
+        $catalog = Kiosk::catalog($page, $event);
+        $settings = Kiosk::settings($page);
         $items = json_decode((string) $this->request->request->get('items', '{}'), true);
         try {
             $receipt = $this->app->make(SaleService::class)->sell(
@@ -115,7 +162,7 @@ class KioskApi extends Controller
                 is_array($items) ? $items : [],
                 SaleService::METHOD_TAB,
                 (int) $session['uID'],
-                ['source' => SaleService::SOURCE_KIOSK, 'bID' => (int) $block->getBlockID(), 'deviceID' => $device['id'], 'event' => $event, 'tabLimit' => (float) $controller->tabLimit]
+                ['source' => SaleService::SOURCE_KIOSK, 'cID' => (int) $page->getCollectionID(), 'deviceID' => $device['id'], 'event' => $event, 'tabLimit' => $settings['tabLimit']]
             );
         } catch (UserMessageException $e) {
             return $this->fail($e->getMessage(), 409, 'sale');
@@ -134,7 +181,7 @@ class KioskApi extends Controller
     }
 
     /**
-     * @return array{0: array|null, 1: Block|null, 2: JsonResponse|null}
+     * @return array{0: array|null, 1: Page|null, 2: JsonResponse|null} the device, the kiosk page, or the error to send
      */
     protected function context(): array
     {
@@ -143,12 +190,25 @@ class KioskApi extends Controller
         if ($device === null) {
             return [null, null, $this->fail(t('This device is not registered as a kiosk.'), 403, 'device')];
         }
-        $block = PosBlock::load((int) $this->request->request->get('bID'), self::BLOCK);
-        if ($block === null) {
-            return [null, null, $this->fail(t('This kiosk was removed. Please reload the page.'), 404, 'block')];
+        $page = Kiosk::page((int) $this->request->request->get('cID'));
+        if ($page === null) {
+            return [null, null, $this->fail(t('This kiosk was removed. Please reload the page.'), 404, 'page')];
         }
 
-        return [$device, $block, null];
+        return [$device, $page, null];
+    }
+
+    /**
+     * The signed-in user, if they may edit the kiosk page.
+     */
+    protected function editor(Page $page): ?UserInfo
+    {
+        if (!Settings::canEditPage($page)) {
+            return null;
+        }
+        $user = $this->app->make(UserInfoRepository::class)->getByID(Settings::currentUserID());
+
+        return $user instanceof UserInfo && $user->isActive() ? $user : null;
     }
 
     /**

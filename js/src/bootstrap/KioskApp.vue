@@ -69,6 +69,12 @@ onBeforeUnmount(() => stop?.())
               <p class="text-muted mb-0">{{ L.idleHint }}</p>
             </div>
           </div>
+          <div v-if="config.self" class="card mt-3">
+            <div class="card-body text-center">
+              <p class="small text-muted">{{ L.selfHint }}</p>
+              <button type="button" class="btn btn-primary" :disabled="s.busy" @click="kiosk.loginSelf()">{{ fill(L.selfSignIn, config.selfName ?? '') }}</button>
+            </div>
+          </div>
           <div v-if="s.busy" class="text-center mt-3"><span class="spinner-border spinner-border-sm" /></div>
           <div v-if="s.notice" class="alert alert-danger mt-3" role="alert">{{ s.notice }}</div>
         </div>
@@ -79,7 +85,7 @@ onBeforeUnmount(() => stop?.())
     <div v-else-if="s.screen === 'login' && s.customer" class="container py-5" style="max-width: 560px">
       <div class="card text-center">
         <div class="card-body p-4">
-          <span class="badge bg-success mb-3">{{ L.badgeRecognised }}</span>
+          <span class="badge bg-success mb-3">{{ s.self ? L.selfRecognised : L.badgeRecognised }}</span>
           <img v-if="s.customer.avatar" :src="s.customer.avatar" alt="" class="rounded-circle mb-3" width="96" height="96" />
           <h1 class="h2">{{ fill(L.hello, s.customer.name) }}</h1>
           <p v-if="s.customer.seat" class="text-muted">{{ fill(L.seat, s.customer.seat) }}</p>
@@ -114,12 +120,12 @@ onBeforeUnmount(() => stop?.())
             <h2 class="h4">{{ categoryName }} <small class="text-muted">{{ kiosk.visible().length }} {{ L.items }}</small></h2>
             <div class="row row-cols-2 row-cols-lg-3 g-3">
               <div v-for="p in kiosk.visible()" :key="p.id" class="col">
-                <ProductCard :product="p" :in-cart="s.cart[p.id] || 0" :labels="L" @open="kiosk.openDetail(p.id)" @add="kiosk.add(p.id)" />
+                <ProductCard :product="p" :in-cart="s.cart[p.id] || 0" :labels="L" :icon-html="p.icon ? config.icons[p.icon] : undefined" @open="kiosk.openDetail(p.id)" @add="kiosk.add(p.id)" />
               </div>
             </div>
           </div>
           <aside class="col-md-3">
-            <CartSummary :title="L.cart" :lines="kiosk.lines()" :total="kiosk.money(kiosk.total())" :labels="L" :money="kiosk.money" :cta="L.toCart" :footnote="L.cartFootnote" :extra="tabRows" @checkout="kiosk.toCart()" />
+            <CartSummary :title="L.cart" :lines="kiosk.lines()" :total="kiosk.money(kiosk.total())" :labels="L" :money="kiosk.money" :cta="L.toCart" :secondary="L.reset" :footnote="L.cartFootnote" :extra="tabRows" @checkout="kiosk.toCart()" @secondary="kiosk.reset()" />
           </aside>
         </div>
       </div>
@@ -144,7 +150,7 @@ onBeforeUnmount(() => stop?.())
             <p class="small text-muted">{{ L.zeroRemoves }}</p>
           </div>
           <div class="col-lg-4">
-            <CartSummary :title="L.total" :lines="kiosk.lines()" :total="kiosk.money(kiosk.total())" :labels="L" :money="kiosk.money" :cta="L.payNow" :footnote="L.payFootnote" :extra="tabRows" @checkout="kiosk.toPay()" />
+            <CartSummary :title="L.total" :lines="kiosk.lines()" :total="kiosk.money(kiosk.total())" :labels="L" :money="kiosk.money" :cta="L.payNow" :footnote="s.self ? L.selfPayFootnote : L.payFootnote" :extra="tabRows" @checkout="kiosk.toPay()" />
           </div>
         </div>
       </div>
@@ -152,15 +158,19 @@ onBeforeUnmount(() => stop?.())
       <div v-else-if="s.screen === 'pay'" class="container py-5">
         <div class="row align-items-center g-5">
           <div class="col-lg-6">
-            <h1 class="display-5 fw-bold">{{ L.confirmTitle }}</h1>
-            <p class="lead">{{ L.confirmText }}</p>
+            <h1 class="display-5 fw-bold">{{ s.self ? L.selfConfirmTitle : L.confirmTitle }}</h1>
+            <p class="lead">{{ s.self ? L.selfConfirmText : L.confirmText }}</p>
             <div class="d-flex gap-5 my-4">
               <div><div class="text-muted small text-uppercase">{{ L.amount }}</div><div class="display-6 fw-bold">{{ kiosk.money(kiosk.total()) }}</div></div>
               <div><div class="text-muted small text-uppercase">{{ L.tabAfter }}</div><div class="display-6">{{ kiosk.money(kiosk.tabAfter()) }}</div></div>
             </div>
             <button type="button" class="btn btn-outline-secondary" @click="kiosk.toCart()">← {{ L.backToCart }}</button>
           </div>
-          <div class="col-lg-6 text-center">
+          <div v-if="s.self" class="col-lg-6 text-center">
+            <button type="button" class="btn btn-primary btn-lg" :disabled="s.busy" @click="kiosk.confirmSelf()">{{ L.pay }} · {{ kiosk.money(kiosk.total()) }}</button>
+            <div v-if="s.notice" class="alert alert-danger mt-3" role="alert">{{ s.notice }}</div>
+          </div>
+          <div v-else class="col-lg-6 text-center">
             <div class="qpos-reader qpos-reader-lg mx-auto mb-3" aria-hidden="true">
               <svg viewBox="0 0 24 24" width="88" height="88" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h.01M2 8.82a15 15 0 0 1 20 0M5 12.86a10 10 0 0 1 14 0M8.5 16.43a5 5 0 0 1 7 0" /></svg>
             </div>
@@ -217,6 +227,7 @@ onBeforeUnmount(() => stop?.())
         <div class="row g-0">
           <div class="col-md-5">
             <img v-if="detail.image" :src="detail.image" :alt="detail.name" class="img-fluid h-100 object-fit-cover" />
+            <span v-else-if="detail.icon && config.icons[detail.icon]" class="qpos-product-placeholder h-100" v-html="config.icons[detail.icon]" />
             <span v-else class="qpos-product-placeholder h-100">{{ detail.name.charAt(0) }}</span>
           </div>
           <div class="col-md-7">

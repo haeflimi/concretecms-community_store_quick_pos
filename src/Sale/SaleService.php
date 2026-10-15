@@ -77,7 +77,7 @@ class SaleService
 
     /**
      * @param array<int|string, int|string> $items pID => qty
-     * @param array{source: string, bID?: int, deviceID?: int, staffUID?: int, event?: Event|null, tabLimit?: float} $context
+     * @param array{source: string, bID?: int, cID?: int, deviceID?: int, staffUID?: int, event?: Event|null, tabLimit?: float} $context bID = the register block, cID = the kiosk page
      *
      * @return array receipt, see receipt()
      *
@@ -314,6 +314,7 @@ class SaleService
             'deviceID' => !empty($context['deviceID']) ? (int) $context['deviceID'] : null,
             'staffUID' => !empty($context['staffUID']) ? (int) $context['staffUID'] : null,
             'bID' => !empty($context['bID']) ? (int) $context['bID'] : null,
+            'cID' => !empty($context['cID']) ? (int) $context['cID'] : null,
             'createdAt' => (new DateTime())->format('Y-m-d H:i:s'),
         ]);
 

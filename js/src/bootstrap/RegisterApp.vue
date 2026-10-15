@@ -29,7 +29,7 @@ onBeforeUnmount(() => stop?.())
         </ul>
         <div class="row row-cols-2 row-cols-md-3 row-cols-xl-4 g-2">
           <div v-for="p in reg.visible()" :key="p.id" class="col">
-            <ProductCard :product="p" :in-cart="s.cart[p.id] || 0" :labels="L" @open="reg.add(p.id)" @add="reg.add(p.id)" />
+            <ProductCard :product="p" :in-cart="s.cart[p.id] || 0" :labels="L" :icon-html="p.icon ? config.icons[p.icon] : undefined" @open="reg.add(p.id)" @add="reg.add(p.id)" />
           </div>
         </div>
         <p v-if="!config.products.length" class="text-muted">{{ L.noProducts }}</p>

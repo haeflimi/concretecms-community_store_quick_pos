@@ -17,7 +17,7 @@ $selected = explode(',', (string) $methods);
     <?= $form->select('eventID', $eventOptions, (int) $eventID) ?>
     <div class="form-text"><?= t("Sales \"on the tab\" go to this event's tab; its shop groups are sold here.") ?></div>
 </div>
-<?php View::element('block_groups', ['groupRows' => $groupRows, 'icons' => $icons], 'community_store_quick_pos'); ?>
+<?php View::element('pos_groups', ['groupRows' => $groupRows], 'community_store_quick_pos'); ?>
 <div class="form-group mb-3">
     <label class="form-label"><?= t('Payment methods') ?></label>
     <?php foreach ($methodOptions as $id => $name) { ?>

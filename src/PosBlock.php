@@ -11,27 +11,13 @@ use Concrete\Package\CommunityStore\Src\CommunityStore\Group\GroupList;
 defined('C5_EXECUTE') or die('Access Denied.');
 
 /**
- * What both POS blocks share: the event they sell for, the product groups (with an icon each) and the catalog.
- * The block record keeps "eventID" (0 = the check-in event on now, -1 = none) and "groups", a JSON object
- * {gID: {"on": bool, "icon": "lucide-name"}}; the event's shop groups are always included.
+ * What the kiosk pages and the register block share: the event they sell for, the product groups and the catalog.
+ * "groups" is a JSON object {gID: {"on": bool}} (the kiosk page attribute, the register block record); the event's
+ * shop groups are always included. The register block record keeps "eventID" (0 = the check-in event on now,
+ * -1 = none). Icons are picked by the icon picker (PosIcons), not chosen by hand.
  */
 class PosBlock
 {
-    /**
-     * Lucide icons offered for the categories (all of them are in the Blackout theme's icon map), with their labels.
-     *
-     * @return array<string, string>
-     */
-    public static function icons(): array
-    {
-        return [
-            'package' => t('Package'), 'cup-soda' => t('Drink'), 'zap' => t('Energy'), 'beer' => t('Beer'), 'coffee' => t('Coffee'),
-            'popcorn' => t('Snack'), 'cookie' => t('Sweets'), 'pizza' => t('Pizza'), 'sandwich' => t('Sandwich'), 'utensils' => t('Food'),
-            'shirt' => t('Merch'), 'tag' => t('Stickers'), 'plug-zap' => t('Hardware'), 'network' => t('Cable'), 'star' => t('Favourite'),
-            'ticket' => t('Ticket'), 'gift' => t('Gift'),
-        ];
-    }
-
     /**
      * The POS block with this ID and handle, or null.
      */
@@ -56,27 +42,20 @@ class PosBlock
 
     public static function catalog(?Event $event, ?string $groupsJson): Catalog
     {
-        $groups = self::groups($groupsJson);
         $ids = app(EventTab::class)->shopGroupIDs($event);
-        foreach ($groups as $gID => $group) {
+        foreach (self::groups($groupsJson) as $gID => $group) {
             if (!empty($group['on'])) {
                 $ids[] = (int) $gID;
             }
         }
-        $icons = [];
-        foreach ($groups as $gID => $group) {
-            if (!empty($group['icon']) && isset(self::icons()[$group['icon']])) {
-                $icons[(int) $gID] = $group['icon'];
-            }
-        }
 
-        return new Catalog($ids, $icons);
+        return new Catalog($ids);
     }
 
     /**
-     * For the block forms: every store group with its setting.
+     * For the forms: every store group with its setting.
      *
-     * @return array<int, array{id: int, name: string, on: bool, icon: string}>
+     * @return array<int, array{id: int, name: string, on: bool}>
      */
     public static function groupRows(?string $groupsJson): array
     {
@@ -84,24 +63,25 @@ class PosBlock
         $rows = [];
         foreach (GroupList::getGroupList() as $group) {
             $gID = (int) $group->getGroupID();
-            $rows[] = ['id' => $gID, 'name' => (string) $group->getGroupName(), 'on' => !empty($groups[$gID]['on']), 'icon' => (string) ($groups[$gID]['icon'] ?? 'package')];
+            $rows[] = ['id' => $gID, 'name' => (string) $group->getGroupName(), 'on' => !empty($groups[$gID]['on'])];
         }
 
         return $rows;
     }
 
     /**
-     * From the block form's posted "groups" array.
+     * From a form's posted "groups" array.
      */
     public static function groupsFromPost($posted): string
     {
         $groups = [];
         foreach ((array) $posted as $gID => $group) {
-            $icon = (string) ($group['icon'] ?? 'package');
-            $groups[(int) $gID] = ['on' => !empty($group['on']), 'icon' => isset(self::icons()[$icon]) ? $icon : 'package'];
+            if (!empty($group['on'])) {
+                $groups[(int) $gID] = ['on' => true];
+            }
         }
 
-        return json_encode($groups);
+        return json_encode($groups, JSON_FORCE_OBJECT);
     }
 
     /**

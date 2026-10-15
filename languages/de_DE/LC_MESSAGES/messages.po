@@ -246,9 +246,6 @@ msgstr "Einkaufen"
 msgid "Sign out"
 msgstr "Abmelden"
 
-#: community_store_quick_pos/src/Labels.php:56
-msgid "Check out"
-msgstr "Bezahlen"
 
 #: community_store_quick_pos/src/Labels.php:57
 msgid "Everything goes on your LAN tab, you pay when you leave."
@@ -966,3 +963,54 @@ msgstr "Bezahlte Bestellungen"
 
 msgid "Shop & kiosk"
 msgstr "Shop & Kiosk"
+
+msgid "Use the kiosk as %s"
+msgstr "Kiosk als %s benutzen"
+
+msgid "No badge reader? You may edit this page, so you can sign in without a badge."
+msgstr "Kein Badge-Leser? Du darfst diese Seite bearbeiten, darum kannst du dich ohne Badge anmelden."
+
+msgid "Signed in without a badge"
+msgstr "Ohne Badge angemeldet"
+
+msgid "You confirm in the next step."
+msgstr "Im nächsten Schritt bestätigst du."
+
+msgid "Confirm your order"
+msgstr "Bestellung bestätigen"
+
+msgid "You are signed in without a badge, so there is no second scan. Confirm to put it on your tab."
+msgstr "Du bist ohne Badge angemeldet, darum gibt es keinen zweiten Scan. Bestätige, dann kommt es auf deine Rechnung."
+
+msgid "Only people who may edit this page can use the kiosk without a badge."
+msgstr "Nur wer diese Seite bearbeiten darf, kann den Kiosk ohne Badge benutzen."
+
+msgid "Your session ran out. Please sign in again."
+msgstr "Deine Sitzung ist abgelaufen. Bitte melde dich nochmals an."
+
+msgid "Kiosk: product groups"
+msgstr "Kiosk: Produktgruppen"
+
+msgid "Kiosk: headline"
+msgstr "Kiosk: Überschrift"
+
+msgid "Kiosk: tab limit"
+msgstr "Kiosk: Rechnungslimit"
+
+msgid "Kiosk: sign out after (seconds)"
+msgstr "Kiosk: Abmelden nach (Sekunden)"
+
+msgid "Which event and products the kiosk sells, and what its start screen says. The text is the page description."
+msgstr "Für welches Event und welche Produkte der Kiosk verkauft, und was sein Startbildschirm sagt. Der Text ist die Seitenbeschreibung."
+
+msgid "Only the event's shop groups"
+msgstr "Nur die Shop-Gruppen des Events"
+
+msgid "The event's shop groups are always sold. Tick further groups to sell them too."
+msgstr "Die Shop-Gruppen des Events werden immer verkauft. Kreuze weitere Gruppen an, um sie ebenfalls zu verkaufen."
+
+msgid "Reset"
+msgstr "Zurücksetzen"
+
+msgid "Proceed to checkout"
+msgstr "Bezahlen"

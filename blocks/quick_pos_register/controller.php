@@ -126,7 +126,6 @@ class Controller extends BlockController
     {
         $this->set('eventOptions', PosBlock::eventOptions());
         $this->set('groupRows', PosBlock::groupRows($this->groups));
-        $this->set('icons', PosBlock::icons());
         $this->set('methodOptions', SaleService::methodNames());
     }
 }

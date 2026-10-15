@@ -48,6 +48,19 @@ class Settings
     }
 
     /**
+     * May the signed-in user edit this page? Editors use the kiosk without a badge (as themselves).
+     */
+    public static function canEditPage(?Page $page): bool
+    {
+        $user = Application::getFacadeApplication()->make(User::class);
+        if (!$user->isRegistered() || !$page || $page->isError()) {
+            return false;
+        }
+
+        return (new Checker($page))->canEditPageContents();
+    }
+
+    /**
      * API routes don't run in the page's locale: switch to the site's default locale so messages and names match the
      * page the POS runs on.
      */

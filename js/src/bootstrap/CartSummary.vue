@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import type { Labels, Line } from '../core'
 
-defineProps<{ title: string; lines: Line[]; total: string; labels: Labels; money: (n: number) => string; cta?: string; footnote?: string; extra?: { label: string; value: string; danger?: boolean }[]; disabled?: boolean }>()
-defineEmits<{ checkout: [] }>()
+defineProps<{ title: string; lines: Line[]; total: string; labels: Labels; money: (n: number) => string; cta?: string; footnote?: string; extra?: { label: string; value: string; danger?: boolean }[]; disabled?: boolean; secondary?: string }>()
+// secondary: a second, quiet button beneath the CTA (kiosk: "Reset" empties the cart)
+defineEmits<{ checkout: []; secondary: [] }>()
 </script>
 
 <template>
@@ -22,6 +23,7 @@ defineEmits<{ checkout: [] }>()
       </div>
       <slot />
       <button v-if="cta" type="button" class="btn btn-primary w-100 mt-3" :disabled="disabled || !lines.length" @click="$emit('checkout')">{{ cta }}</button>
+      <button v-if="secondary" type="button" class="btn btn-outline-secondary w-100 mt-2" :disabled="!lines.length" @click="$emit('secondary')">{{ secondary }}</button>
       <p v-if="footnote" class="small text-muted mt-2 mb-0">{{ footnote }}</p>
     </div>
   </div>

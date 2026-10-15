@@ -54,6 +54,7 @@
         <field name="deviceID" type="integer"><unsigned/></field>
         <field name="staffUID" type="integer"><unsigned/></field>
         <field name="bID" type="integer"><unsigned/></field>
+        <field name="cID" type="integer"><unsigned/></field>
         <field name="total" type="decimal" size="10.2"><notnull/><default value="0"/></field>
         <field name="items" type="text"/>
         <field name="createdAt" type="datetime"><notnull/></field>

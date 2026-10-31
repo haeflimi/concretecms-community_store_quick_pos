@@ -110,6 +110,7 @@ class Controller extends BlockController
             'api' => (string) Url::to('/ccm/quick_pos/register'),
             'token' => $this->app->make('token')->generate(RegisterApi::TOKEN),
             'eventName' => $event !== null ? $event->getName() : null,
+            'catering' => \CommunityStoreQuickPos\Sale\CateringDesk::offers($event),
             'methods' => array_map(static function ($method) use ($names) {
                 return ['id' => $method, 'name' => $names[$method], 'needsCustomer' => in_array($method, [SaleService::METHOD_CREDIT, SaleService::METHOD_TAB], true)];
             }, $this->getMethods()),

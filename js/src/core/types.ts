@@ -79,6 +79,40 @@ export interface RegisterConfig extends PosConfigBase {
   methods: Method[]
   topUp: boolean
   topUpMethods: { id: string; name: string }[]
+  /** the event has catering slots: the register offers the "Catering" view */
+  catering: boolean
+}
+
+/** Catering view: a slot of the event with its order count per status */
+export interface CateringSlot {
+  id: number
+  title: string
+  /** day and time of the delivery, formatted */
+  when: string
+  /** still taking orders */
+  open: boolean
+  counts: Record<string, number>
+  total: number
+}
+
+export interface CateringOrder {
+  oID: number
+  name: string
+  seat: string | null
+  paid: boolean
+  /** store order status handle */
+  status: string
+  /** the status after this one, null at the end */
+  next: string | null
+  items: { name: string; qty: number }[]
+}
+
+export interface CateringOverview {
+  slots: CateringSlot[]
+  slotID: number
+  orders: CateringOrder[]
+  totals: { name: string; qty: number }[]
+  flow: { id: string; name: string }[]
 }
 
 export interface Person {

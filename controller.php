@@ -43,7 +43,7 @@ class Controller extends Package
     protected $pkgHandle = 'community_store_quick_pos';
     protected $appVersionRequired = '9.0.0';
     protected $phpVersionRequired = '8.0';
-    protected $pkgVersion = '0.4.0';
+    protected $pkgVersion = '0.5.0';
     protected $pkgAutoloaderRegistries = [
         'src' => 'CommunityStoreQuickPos',
         // Community Store loads payment methods from Concrete\Package\<Package>\Src\CommunityStore\Payment\Methods\…
@@ -72,7 +72,7 @@ class Controller extends Package
             $router->post('/ccm/quick_pos/kiosk/' . $action, $kiosk . $action);
         }
         $register = 'CommunityStoreQuickPos\Controller\RegisterApi::';
-        foreach (['customer', 'search', 'sell', 'topup', 'assign', 'recent'] as $action) {
+        foreach (['customer', 'search', 'sell', 'topup', 'assign', 'recent', 'catering', 'catering_status'] as $action) {
             $router->post('/ccm/quick_pos/register/' . $action, $register . $action);
         }
 

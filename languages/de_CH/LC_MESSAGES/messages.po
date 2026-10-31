@@ -1014,3 +1014,68 @@ msgstr "Zurücksetzen"
 
 msgid "Proceed to checkout"
 msgstr "Bezahlen"
+
+#: community_store_quick_pos/src/Labels.php:127
+msgctxt "Register view"
+msgid "Sale"
+msgstr "Verkauf"
+
+#: community_store_quick_pos/src/Labels.php:128
+msgid "Catering"
+msgstr "Catering"
+
+#: community_store_quick_pos/src/Labels.php:129
+msgid "Delivery"
+msgstr "Lieferung"
+
+#: community_store_quick_pos/src/Labels.php:130
+msgid "No orders for this delivery."
+msgstr "Keine Bestellungen für diese Lieferung."
+
+#: community_store_quick_pos/src/Labels.php:131
+msgid "still taking orders"
+msgstr "noch bestellbar"
+
+#: community_store_quick_pos/src/Labels.php:132
+msgid "To prepare"
+msgstr "Zuzubereiten"
+
+#: community_store_quick_pos/src/Labels.php:133
+msgid "Orders"
+msgstr "Bestellungen"
+
+#: community_store_quick_pos/src/Labels.php:134
+msgid "Select all"
+msgstr "Alle auswählen"
+
+#: community_store_quick_pos/src/Labels.php:135
+#, php-format
+msgid "Select all \"%s\""
+msgstr "Alle «%s» auswählen"
+
+#: community_store_quick_pos/src/Labels.php:136
+#, php-format
+msgid "Next: %s"
+msgstr "Weiter: %s"
+
+#: community_store_quick_pos/src/Labels.php:137
+msgid "Set to"
+msgstr "Setzen auf"
+
+#: community_store_quick_pos/src/Labels.php:138
+#, php-format
+msgid "%s selected"
+msgstr "%s ausgewählt"
+
+#: community_store_quick_pos/src/Labels.php:139
+msgid "unpaid"
+msgstr "unbezahlt"
+
+#: community_store_quick_pos/src/Labels.php:140
+msgid "Reload"
+msgstr "Neu laden"
+
+#: community_store_quick_pos/src/Controller/RegisterApi.php:183
+#: community_store_quick_pos/src/Controller/RegisterApi.php:200
+msgid "This event has no catering."
+msgstr "Dieses Event hat kein Catering."

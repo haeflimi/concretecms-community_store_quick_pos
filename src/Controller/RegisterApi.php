@@ -5,6 +5,7 @@ namespace CommunityStoreQuickPos\Controller;
 use CommunityStoreCredit\Service\CreditService;
 use CommunityStoreQuickPos\Badge\BadgeService;
 use CommunityStoreQuickPos\PosBlock;
+use CommunityStoreQuickPos\Sale\CateringDesk;
 use CommunityStoreQuickPos\Sale\EventTab;
 use CommunityStoreQuickPos\Sale\SaleService;
 use CommunityStoreQuickPos\Settings;
@@ -166,6 +167,47 @@ class RegisterApi extends Controller
         }
 
         return new JsonResponse(['ok' => true, 'sales' => $this->app->make(SaleService::class)->recent((int) $block->getBlockID())]);
+    }
+
+    /**
+     * Catering view: the slots of the register's event and the delivery list of one slot.
+     */
+    public function catering(): JsonResponse
+    {
+        [$block, $error] = $this->context();
+        if ($error) {
+            return $error;
+        }
+        $event = PosBlock::event((int) $block->getController()->eventID);
+        if (!CateringDesk::offers($event)) {
+            return $this->fail(t('This event has no catering.'), 404, 'catering');
+        }
+
+        return new JsonResponse(['ok' => true] + $this->app->make(CateringDesk::class)->overview($event, (int) $this->request->request->get('slotID', 0)));
+    }
+
+    /**
+     * Catering view: sets the delivery status of the chosen orders (bulk), then the updated list.
+     */
+    public function catering_status(): JsonResponse
+    {
+        [$block, $error] = $this->context();
+        if ($error) {
+            return $error;
+        }
+        $event = PosBlock::event((int) $block->getController()->eventID);
+        if (!CateringDesk::offers($event)) {
+            return $this->fail(t('This event has no catering.'), 404, 'catering');
+        }
+        $desk = $this->app->make(CateringDesk::class);
+        $oIDs = json_decode((string) $this->request->request->get('orders', '[]'), true);
+        try {
+            $changed = $desk->setStatus($event, is_array($oIDs) ? $oIDs : [], (string) $this->request->request->get('status', ''), Settings::currentUserID());
+        } catch (UserMessageException $e) {
+            return $this->fail($e->getMessage(), 409, 'catering');
+        }
+
+        return new JsonResponse(['ok' => true, 'changed' => $changed] + $desk->overview($event, (int) $this->request->request->get('slotID', 0)));
     }
 
     protected function customerData(Block $block, UserInfo $user): array

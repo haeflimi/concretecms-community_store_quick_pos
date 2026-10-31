@@ -1,8 +1,9 @@
 <script setup lang="ts">
 // Staff register, Bootstrap markup. The logic lives in core/register.ts.
-import { computed, onBeforeUnmount, onMounted, reactive } from 'vue'
+import { computed, onBeforeUnmount, onMounted, reactive, ref } from 'vue'
 import { createRegister, fill, type RegisterConfig } from '../core'
 import CartSummary from './CartSummary.vue'
+import CateringDesk from './CateringDesk.vue'
 import ProductCard from './ProductCard.vue'
 import QtyStepper from './QtyStepper.vue'
 
@@ -11,6 +12,8 @@ const reg = createRegister(props.config, reactive as <T extends object>(o: T) =>
 const s = reg.state
 const L = reg.labels
 const c = computed(() => s.customer)
+/** "sale" or "catering" (only when the event has catering) */
+const view = ref<'sale' | 'catering'>('sale')
 
 let stop: (() => void) | undefined
 onMounted(() => (stop = reg.start()))
@@ -19,7 +22,12 @@ onBeforeUnmount(() => stop?.())
 
 <template>
   <div class="qpos qpos-register">
-    <div class="row g-3">
+    <ul v-if="config.catering" class="nav nav-tabs mb-3">
+      <li class="nav-item"><button type="button" class="nav-link" :class="{ active: view === 'sale' }" @click="view = 'sale'">{{ L.sale }}</button></li>
+      <li class="nav-item"><button type="button" class="nav-link" :class="{ active: view === 'catering' }" @click="view = 'catering'">{{ L.catering }}</button></li>
+    </ul>
+    <CateringDesk v-if="view === 'catering'" :config="config" />
+    <div v-show="view === 'sale'" class="row g-3">
       <!-- catalog -->
       <div class="col-lg-8">
         <ul class="nav nav-pills mb-3">

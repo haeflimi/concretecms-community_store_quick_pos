@@ -123,6 +123,21 @@ class Labels
             'methodNeedsCustomer' => t('Choose a customer for this payment method.'),
             'creditTooLow' => t('Not enough credit'),
             'seat' => t('Seat %s'),
+            // catering view
+            'sale' => tc('Register view', 'Sale'),
+            'catering' => t('Catering'),
+            'cateringSlot' => t('Delivery'),
+            'cateringEmpty' => t('No orders for this delivery.'),
+            'cateringOpen' => t('still taking orders'),
+            'kitchen' => t('To prepare'),
+            'orders' => t('Orders'),
+            'selectAll' => t('Select all'),
+            'selectStatus' => t('Select all "%s"'),
+            'nextStatus' => t('Next: %s'),
+            'setStatusTo' => t('Set to'),
+            'selected' => t('%s selected'),
+            'unpaid' => t('unpaid'),
+            'reload' => t('Reload'),
         ];
     }
 

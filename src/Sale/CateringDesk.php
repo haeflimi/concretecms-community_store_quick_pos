@@ -44,8 +44,7 @@ class CateringDesk
                     ++$counts[$order['status']];
                 }
             }
-            $end = $slot->getDeliveryEnd() ?: (clone $slot->getDeliveryStart())->modify('+1 hour');
-            if ($next === 0 && $end >= $now) {
+            if ($next === 0 && $slot->getListedUntil() >= $now) {
                 $next = $slot->getID();
             }
             $slots[] = [

@@ -80,7 +80,7 @@ class EventTab
             return $result;
         }
         $result['participant'] = $participant;
-        $result['seat'] = $participant->getSeatID();
+        $result['seat'] = $participant->getVisibleSeatID();
         if ($event->isCheckinEnabled() && !$participant->isPresent()) {
             $result['state'] = self::NOT_CHECKED_IN;
 
